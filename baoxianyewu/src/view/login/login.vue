@@ -1,9 +1,9 @@
 <template>
   <div class="wrapper">
-    <h1>保费佣金贷-企业端</h1>
+    <h1>保费佣金贷-业务端</h1>
     <div class="login-box">
       <div class="switch">
-        <h3>登录</h3> 
+        <h3>账号登录</h3> 
       </div>
 
       <div class="lo-mo">
@@ -25,12 +25,10 @@
         </div>
 
         <div class="login-content">
-          <el-row :gutter="24">
-            <el-col :span="17">
-              <el-form-item label="验证码" prop="password">
+              <el-form-item label="密码" prop="password">
                 <el-input
                   class="ell"
-                  placeholder="请输入验证码"
+                  placeholder="请输入密码"
                   v-model.trim="loginform.password"
                 >
                   <template slot="prepend">
@@ -38,14 +36,6 @@
                   </template>
                 </el-input>
               </el-form-item>
-              </el-col>
-
-              <el-col :span="6">
-                <el-button icon="el-icon-mobile-phone" :disabled="disabled=!show" type="primary" size="medium" @click="send()">
-                  <span v-show="show">获取验证码</span>
-                  <span v-show="!show" class="count">{{count}} s</span>
-                </el-button>
-              </el-col>
           </el-row>
         </div>
 
@@ -115,22 +105,7 @@ export default {
   },
   mounted() {},
   methods: {
-    send(){   
-      const TIME_COUNT = 60; //更改倒计时时间
-            if (!this.timer) {
-                this.count = TIME_COUNT;
-                this.show = false;
-                this.timer = setInterval(() => {
-                  if (this.count > 0 && this.count <= TIME_COUNT) {
-                    this.count--;
-                  } else {
-                    this.show = true;
-                    clearInterval(this.timer);  // 清除定时器
-                    this.timer = null;
-                  }
-                }, 1000)
-              }
-        },
+    
     //登录
     login(formName) {
       this.show = true;
@@ -215,7 +190,7 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: url('http://photocdn.sohu.com/20150906/Img420479942.jpg');
+  background-image: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561288758180&di=e6540ebe97f725897ffd77bf6a0687e2&imgtype=0&src=http%3A%2F%2Fimg.pconline.com.cn%2Fimages%2Fupload%2Fupc%2Ftx%2Fphotoblog%2F1205%2F27%2Fc0%2F11769362_11769362_1338048682432.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -232,6 +207,9 @@ h1 {
   margin-inline-end: 0px;
 }
 .login-box {
+  opacity: .8;
+  border-bottom-left-radius: 120px;
+  border-top-right-radius: 120px;
   background-color: #fff;
   position: relative;
   margin: 0 auto;
