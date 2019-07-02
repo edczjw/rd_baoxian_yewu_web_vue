@@ -7,15 +7,20 @@ import axios from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import animate from 'animate.css'
+import { api } from './api'
+import VueResource from 'vue-resource'
+Vue.use(VueResource)
+Vue.prototype.$api = api
 //引入vuex
 import store from './store'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(animate)
+Vue.prototype.$store = store
 Vue.prototype.$axios = axios
-router.afterEach((to,from,next) => {
-  window.scrollTo(0,0);
+router.afterEach((to, from, next) => {
+  window.scrollTo(0, 0);
 });
 
 /* eslint-disable no-new */

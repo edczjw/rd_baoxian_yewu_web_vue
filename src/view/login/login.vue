@@ -15,8 +15,8 @@
         class="demo-ruleForm"
       >
         <div class="login-content">
-          <el-form-item label="账号" prop="username">
-            <el-input class="ell" placeholder="请输入手机号" v-model.trim="loginform.username">
+          <el-form-item label="账号" prop="mobile">
+            <el-input class="ell" placeholder="请输入手机号" v-model.trim="loginform.mobile">
               <template slot="prepend">
                 <i class="el-icon-edit"></i>
               </template>
@@ -29,8 +29,9 @@
                 <el-input
                   class="ell"
                   placeholder="请输入密码"
+                  type="password"
                   v-model.trim="loginform.password"
-                >
+                > 
                   <template slot="prepend">
                     <i class="el-icon-view"></i>
                   </template>
@@ -57,25 +58,24 @@ export default {
     // 确认密码校验
     var validatePass2 = (rule, value, callback) => {
       if (value !== this.registform.password) {
-        callback(new Error("两次输入密码不一致!"));
+        callback(new Error("两次输入密码不一致!")); 
       } else {
         callback();
       }
     };
     return {
-      show: true,  // 初始启用按钮
       count: '',   // 初始化次数
       timer: null,
 
       // 登录表单
       loginform: {
-        username: "",
+        mobile: "",
         password: ""
       },
 
       //输入框验证
       rules: {
-        username: [
+        mobile: [
           { required: true, message: "账号不能为空。", trigger: "blur" },
           { max: 11, message: "长度 11 个字符。", trigger: "blur" },
           {
@@ -105,74 +105,92 @@ export default {
   },
   mounted() {},
   methods: {
-    
     //登录
     login(formName) {
-      this.show = true;
-      clearInterval(this.timer);  // 清除定时器
-      this.timer = null;
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$axios({
             method: "post",
-            url: this.$store.state.domain + "/biz/user/login",
+            url: this.$store.state.domain + "/manage/user/login",
             data: this.loginform
           }).then(
-            response => {
-              if (response.data.code == 0) {
-                //开户状态、用户名、企业编号
-                var accountStatus = response.data.detail.accountStatus;
-                var username = response.data.detail.username;
+          //成功
+          response => {
+            console.log('response',response)
+            if (response.data.code == 0) { 
 
-                //未开户时不返回
-                if (
-                  response.data.detail.enterpriseNo != "" ||
-                  response.data.detail.enterpriseNo != null
-                ) {
-                  var enterpriseNo = response.data.detail.enterpriseNo;
+              var str = response.data.detail.name;  
+              var strid=response.data.detail.auditor_id;
+              
+              for(var x=0; x<response.data.detail.role.length;x++){
+                if((response.data.detail.role[x].roleName)=="systemOperator"){
+                 var rolename="showtrue";
+                 sessionStorage.setItem("role",rolename);//本地存储角色
+                }else{
+                  console.log(response.data.detail.role[x].roleName)
+                 sessionStorage.setItem("role",null);
                 }
-
-                console.log(username);
-
-                //存储状态、用户名、企业编号
-                sessionStorage.setItem("accountStatus", accountStatus);
-                sessionStorage.setItem("username", username);
-                sessionStorage.setItem("enterpriseNo", enterpriseNo);
-
-                //登录成功
-                this.$message({
-                  message: "恭喜你" + response.data.msg,
-                  type: "success"
-                });
-
-                if (accountStatus == 2) {
-                  //已开户
-                  this.$router.push("/mshome"); //跳转
-                  console.log(accountStatus + "跳转到主页");
-                } else if (accountStatus == 0) {
-                  this.$router.push("/creatuser/creatus");
-                  console.log(accountStatus + "创建账户");
-                  this.$store.state.buttonshow = true; //隐藏开户提交按钮
-                } else if (
-                  accountStatus == 1 ||
-                  accountStatus == 4 ||
-                  accountStatus == 5
-                ) {
-                  this.$router.push("/creatuser/creatus");
-                  console.log(accountStatus + "创建账户");
-                  this.$store.state.buttonshow = false; //隐藏开户提交按钮
-                } else if (accountStatus == 3) {
-                  this.$router.push("/failcreatuser/failcreatus");
-                  console.log(accountStatus + "创建账户失败");
-                }
-              } else {
-                this.$message.error(response.data.msg);
               }
-            },
-            response => {
-              console.log(response);
+              sessionStorage.setItem("username", str);//本地存储用户名
+
+              // if(str=='陈春松'){
+              //   this.setCookie('admint=bdd6df454ac00feece272c0f2c8e53a252dabba4;')
+              //   this.setCookie('adminhostid=3')
+              // }
+              // else if(str=='林中林'){
+              //   this.setCookie('admint=91b5e4269fb5564aadca6982d9bf2c0b47469dde;')
+              //   this.setCookie('adminhostid=10')
+              // }else if(str=='刘建平'){
+              //   this.setCookie('admint=677a0e45cfa3a9e49f9a06d82863b276cdcbc6d6;')
+              //   this.setCookie('adminhostid=2')
+              // }else if(str=='邓永枢'){
+              //   this.setCookie('admint=8a0056d7ef024b4055c0a33a4c56176e3c96dd0c;')
+              //   this.setCookie('adminhostid=1')
+              // }else if(str=='何稳'){
+              //   this.setCookie('admint=4fe5e00d51d8edeec543ddf2cb939c70dc131b87;')
+              //   this.setCookie('adminhostid=4')
+              // }else if(str=='菜小池'){
+              //   this.setCookie('admint=5825152c96d4aeadbe002c4c6cdcc27283828a54;')
+              //   this.setCookie('adminhostid=5')
+              // }else if(str=='闫勇'){
+              //   this.setCookie('admint=941a7eb3a3186ad643dc31b3dd058aa485799b31;')
+              //   this.setCookie('adminhostid=6')
+              // }else if(str=='廖凯璇'){
+              //   this.setCookie('admint=b384cd26f0f8484bbd99593a16cc56cae5086dba;')
+              //   this.setCookie('adminhostid=7')
+              // }else if(str=='朱雪玲'){
+              //   this.setCookie('admint=5960ab324eccd7ed4bd01912c969fe3e51dbcf16;')
+              //   this.setCookie('adminhostid=8')
+              // }else if(str=='傅羿方'){
+              //   this.setCookie('admint=55c08dbd3775245f0cef1f50ac7bca46655a2130;')
+              //   this.setCookie('adminhostid=9')
+              // } else{
+              //   this.setCookie('admint=1213;')
+              //   this.setCookie('adminhostid=120')
+              // }
+               this.$message({
+                message: '登录成功',
+                type: 'success'
+              });
+              sessionStorage.setItem("userId", strid);//本地存储用户ID
+              this.$router.push("/home");//跳转
+            } 
+            //失败
+            else {
+              this.$message({
+                message: response.data.msg,
+                type: "error"
+              });
+              this.tips_show = true;
+              this.tips = response.data.description;
+              this.is_error = true;
             }
-          );
+          },
+          //打印
+          response => {
+            console.log(response);
+          }
+        );
         } else {
           console.log("error submit!!");
           return false;
@@ -201,10 +219,11 @@ h1 {
   font-weight: 700;
   text-shadow: 0 1px 1px #555;
   display: block;
-  margin-block-start: 3.67em;
-  margin-block-end: 0.67em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
+  padding-top:6%;
+  // margin-block-start: 3.67em;
+  // margin-block-end: 0.67em;
+  // margin-inline-start: 0px;
+  // margin-inline-end: 0px;
 }
 .login-box {
   opacity: .8;

@@ -101,7 +101,7 @@ export default {
 <style lang='less'>
 .top {
   width: 100%;
-  height: 65px;
+  height: 50px;
 }
 
 //右边部分整个大页面
