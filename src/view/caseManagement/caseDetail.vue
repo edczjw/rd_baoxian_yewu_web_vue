@@ -101,12 +101,6 @@ export default {
             }
             this.data = res.detail.result;
             console.log("data", this.data);
-          } else if (res.code == 10) {
-            this.$message({
-              message: res.msg,
-              type: "error"
-            });
-            this.$router.push("/login");
           }
         },
         error => {}

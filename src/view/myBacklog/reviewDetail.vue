@@ -183,13 +183,7 @@ export default {
               type: "success"
             });
             this.$router.back(-1);
-          } else if (res.code == 10) {
-            this.$message({
-              message: res.msg,
-              type: "error"
-            });
-            this.$router.push("/login");
-          }
+          } 
         },
         error => {}
       );
@@ -224,12 +218,6 @@ export default {
               );
             }
             this.data = res.detail.result;
-          } else if (res.code == 10) {
-            this.$message({
-              message: res.msg,
-              type: "error"
-            });
-            this.$router.push("/login");
           }
         },
         error => {}

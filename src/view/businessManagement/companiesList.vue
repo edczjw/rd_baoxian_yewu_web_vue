@@ -94,12 +94,6 @@ export default {
             this.count = res.detail.result.count;
             this.searchform.pageIndex = res.detail.result.pageIndex;
             this.searchform.pageSize = res.detail.result.pageSize;
-          }else if(res.code == 10){
-            this.$message({
-              message:res.msg,
-              type:'error'
-            })
-            this.$router.push('/login')
           }
         },
         error => {}

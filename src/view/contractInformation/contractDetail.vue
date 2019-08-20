@@ -98,12 +98,6 @@ export default {
               res.detail.result.contUrl = res.detail.result.contUrl.split(",");
             }
             this.data = res.detail.result;
-          }else if(res.code == 10){
-            this.$message({
-              message:res.msg,
-              type:'error'
-            })
-            this.$router.push('/login')
           }
         },
         error => {}

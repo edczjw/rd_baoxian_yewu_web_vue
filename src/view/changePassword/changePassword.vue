@@ -79,12 +79,6 @@ export default {
                   message: response.data.detail.result,
                   type: "success"
                 });
-              } else if (response.data.code == 10) {
-                this.$message({
-                  message: res.msg,
-                  type: "error"
-                });
-                this.$router.push("/login");
               }
             },
             error => {}

@@ -4,7 +4,7 @@
     <!-- 返回顶部 -->
     <div id="dtop" class="gotop" title="返回顶部" @click="movetop">
       <svg class="icon" aria-hidden="true">
-        <use xlink:href="#icon-ico-top"></use>
+        <use xlink:href="#icon-ico-top" />
       </svg>
       <div class="bg"></div>
       <div class="circle"></div>
@@ -32,9 +32,17 @@ export default {
     };
   },
   mounted() {
-    // this.getName();
-    // this.tologin();//判断是否登陆
-    window.addEventListener("scroll", this.returntop, true); // 监听（绑定）滚轮滚动事件
+    this.getName();
+    this.tologin(); //判断是否登陆
+    window.addEventListener("scroll", function(e) {
+      // 监听（绑定）滚轮滚动事件
+      var t = document.documentElement.scrollTop || document.body.scrollTop;
+      if (t > 350) {
+        document.getElementById("dtop").style.display = "block";
+      } else {
+        document.getElementById("dtop").style.display = "none";
+      }
+    });
   },
   methods: {
     tologin() {
@@ -42,21 +50,6 @@ export default {
         this.$message.error("请进行登录!");
         console.log(this.userName);
         this.$router.push("/login");
-      }
-    },
-    //返回顶部
-    returntop() {
-      //返回顶部
-      var htop = document.documentElement.scrollTop; //获取滚动高度
-      //判断滚动条滚动长度
-      if (htop > 350) {
-        $(".gotop")
-          .stop()
-          .fadeIn();
-      } else {
-        $(".gotop")
-          .stop()
-          .fadeOut();
       }
     },
     movetop() {
@@ -70,7 +63,7 @@ export default {
             '<svg class="icon" aria-hidden="true"> <use xlink:href="#icon-jiqiren"></use> </svg> ' +
             "欢迎登陆您民盛报送系统！",
           type: "success",
-          center: true
+          center: true,
         });
       } else {
         this.$message({
@@ -122,7 +115,6 @@ export default {
   width: 100%;
   height: 0;
   padding-bottom: 70%;
-
   background: rgb(238, 237, 237);
 }
 
@@ -133,5 +125,32 @@ export default {
   vertical-align: -0.9em;
   fill: currentColor;
   padding: 3px 5px;
+}
+/* 返回顶部 */
+.gotop {
+  position: fixed;
+  z-index: 9999;
+  right: 23px;
+  bottom: 33px;
+
+  display: none;
+
+  cursor: pointer;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  -webkit-transition-timing-function: linear; /* Safari and Chrome */
+  transition-timing-function: linear;
+
+  opacity: 0.4;
+  border-radius: 50%;
+}
+.bg {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: pulse 5s infinite;
 }
 </style>

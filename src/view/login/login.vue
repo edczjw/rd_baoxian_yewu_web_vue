@@ -103,7 +103,9 @@ export default {
       }
     };
   },
-  mounted() {},
+  mounted() {
+    
+  },
   methods: {
     //登录
     login(formName) {
@@ -132,42 +134,6 @@ export default {
                 }
               }
               sessionStorage.setItem("username", str);//本地存储用户名
-
-              // if(str=='陈春松'){
-              //   this.setCookie('admint=bdd6df454ac00feece272c0f2c8e53a252dabba4;')
-              //   this.setCookie('adminhostid=3')
-              // }
-              // else if(str=='林中林'){
-              //   this.setCookie('admint=91b5e4269fb5564aadca6982d9bf2c0b47469dde;')
-              //   this.setCookie('adminhostid=10')
-              // }else if(str=='刘建平'){
-              //   this.setCookie('admint=677a0e45cfa3a9e49f9a06d82863b276cdcbc6d6;')
-              //   this.setCookie('adminhostid=2')
-              // }else if(str=='邓永枢'){
-              //   this.setCookie('admint=8a0056d7ef024b4055c0a33a4c56176e3c96dd0c;')
-              //   this.setCookie('adminhostid=1')
-              // }else if(str=='何稳'){
-              //   this.setCookie('admint=4fe5e00d51d8edeec543ddf2cb939c70dc131b87;')
-              //   this.setCookie('adminhostid=4')
-              // }else if(str=='菜小池'){
-              //   this.setCookie('admint=5825152c96d4aeadbe002c4c6cdcc27283828a54;')
-              //   this.setCookie('adminhostid=5')
-              // }else if(str=='闫勇'){
-              //   this.setCookie('admint=941a7eb3a3186ad643dc31b3dd058aa485799b31;')
-              //   this.setCookie('adminhostid=6')
-              // }else if(str=='廖凯璇'){
-              //   this.setCookie('admint=b384cd26f0f8484bbd99593a16cc56cae5086dba;')
-              //   this.setCookie('adminhostid=7')
-              // }else if(str=='朱雪玲'){
-              //   this.setCookie('admint=5960ab324eccd7ed4bd01912c969fe3e51dbcf16;')
-              //   this.setCookie('adminhostid=8')
-              // }else if(str=='傅羿方'){
-              //   this.setCookie('admint=55c08dbd3775245f0cef1f50ac7bca46655a2130;')
-              //   this.setCookie('adminhostid=9')
-              // } else{
-              //   this.setCookie('admint=1213;')
-              //   this.setCookie('adminhostid=120')
-              // }
                this.$message({
                 message: '登录成功',
                 type: 'success'
@@ -184,6 +150,7 @@ export default {
               this.tips_show = true;
               this.tips = response.data.description;
               this.is_error = true;
+
             }
           },
           //打印
@@ -220,10 +187,6 @@ h1 {
   text-shadow: 0 1px 1px #555;
   display: block;
   padding-top:6%;
-  // margin-block-start: 3.67em;
-  // margin-block-end: 0.67em;
-  // margin-inline-start: 0px;
-  // margin-inline-end: 0px;
 }
 .login-box {
   opacity: .8;
